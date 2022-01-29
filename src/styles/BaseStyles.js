@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
-import { color, font, mixin } from './styles';
+import { color, font, mixin } from "./styles";
 
 export default createGlobalStyle`
   html, body, #root {
