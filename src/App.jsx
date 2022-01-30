@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { Toast } from "./components";
+import Router from "./Router";
 import BaseStyles from "./styles/BaseStyles";
 import NormalizeStyles from "./styles/NormalizeStyles";
 
@@ -9,9 +10,7 @@ function App() {
       <NormalizeStyles />
       <BaseStyles />
       <Toast />
-      <div>
-        <h1>Hello World!</h1>
-      </div>
+      <Router />
     </Fragment>
   );
 }
