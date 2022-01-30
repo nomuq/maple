@@ -1,0 +1,49 @@
+import { getAuth } from "firebase/auth";
+import {
+  addDoc,
+  collection,
+  doc,
+  DocumentData,
+  Firestore,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
+
+export class UserService {
+  private static instance: UserService;
+  private database: Firestore = getFirestore();
+  private auth = getAuth();
+
+  private constructor() {}
+  public static getInstance(): UserService {
+    if (!UserService.instance) {
+      UserService.instance = new UserService();
+    }
+    return UserService.instance;
+  }
+
+  public async updateUser(): Promise<void> {
+    const docRef = doc(this.database, `users/${this.auth.currentUser.uid}`);
+    await setDoc(
+      docRef,
+      {
+        uid: this.auth.currentUser.uid,
+        displayName: this.auth.currentUser.displayName,
+        email: this.auth.currentUser.email,
+        photoURL: this.auth.currentUser.photoURL,
+        emailVerified: this.auth.currentUser.emailVerified,
+      },
+      {
+        merge: true,
+      }
+    );
+  }
+
+  //   public async getUser(): Promise<DocumentData> {
+  //     const snapshot = await getDoc(
+  //       collection(this.database, `users/${this.auth.currentUser.uid}`)
+  //     );
+  //     return snapshot.data();
+  //   }
+}

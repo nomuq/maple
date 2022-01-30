@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import { PageLoader } from "./components";
 import Dashboard from "./pages/Dashboard";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { UserService } from "./services/UserService";
+import toast from "./utils/toast";
 
 export default function Router() {
   const auth = getAuth();
@@ -13,8 +15,15 @@ export default function Router() {
   React.useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setIsLoading(false);
-        setIsAuthenticated(true);
+        (async () => {
+          try {
+            await UserService.getInstance().updateUser();
+            setIsLoading(false);
+            setIsAuthenticated(true);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        })();
       } else {
         setIsLoading(false);
         setIsAuthenticated(false);
