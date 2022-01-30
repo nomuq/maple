@@ -10,7 +10,7 @@ const error = err => {
     type: 'danger',
     title: 'Error',
     message: get(err, 'message', err),
-    duration: 0,
+    duration: 10,
   });
 };
 

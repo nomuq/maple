@@ -66,26 +66,59 @@ export default function Login() {
                 signInWithPopup(auth, provider)
                   .then((result) => {
                     // setIsLoading(false);
-                    // This gives you a Google Access Token. You can use it to access the Google API.
-                    const credential =
-                      GoogleAuthProvider.credentialFromResult(result);
-                    const token = credential.accessToken;
-                    // The signed-in user info.
-                    const user = result.user;
-                    // ...
-                    console.log(user, token);
                   })
                   .catch((error) => {
-                    toast.error(error.message);
                     setIsLoading(false);
                     // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    // The email of the user's account used.
-                    const email = error.email;
-                    // The AuthCredential type that was used.
-                    const credential =
-                      GoogleAuthProvider.credentialFromError(error);
+
+                    switch (errorCode) {
+                      case "auth/account-exists-with-different-credential":
+                        toast.error(
+                          "You have already signed up with a different auth provider for that email."
+                        );
+                        break;
+                      case "auth/auth-domain-config-required":
+                        toast.error(
+                          "Looks like you haven't configured your Firebase project's auth domain. Check the Firebase console to learn how to set it up."
+                        );
+                        break;
+                      case "auth/cancelled-popup-request":
+                        toast.error(
+                          "The popup has been closed by the user before finalizing the sign-in process."
+                        );
+                        break;
+                      case "auth/operation-not-allowed":
+                        toast.error(
+                          "You must enable the provider in the Firebase console before attempting to use it with the web."
+                        );
+                        break;
+                      case "auth/operation-not-supported-in-this-environment":
+                        toast.error(
+                          "This operation is not supported in the environment your application is running on."
+                        );
+                        break;
+                      case "auth/popup-blocked":
+                        toast.error(
+                          "The popup was blocked by the browser, either due to being in an iframe or due to being on the same domain as the popup."
+                        );
+                        break;
+                      case "auth/popup-closed-by-user":
+                        toast.error(
+                          "The popup window was closed by the user before finalizing the sign-in process."
+                        );
+                        break;
+                      case "auth/unauthorized-domain":
+                        toast.error(
+                          "The provided domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console."
+                        );
+                        break;
+
+                      default:
+                        toast.error(error.message);
+                        break;
+                    }
                   });
               }}
             >
