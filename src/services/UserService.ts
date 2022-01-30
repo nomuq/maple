@@ -39,11 +39,4 @@ export class UserService {
       }
     );
   }
-
-  //   public async getUser(): Promise<DocumentData> {
-  //     const snapshot = await getDoc(
-  //       collection(this.database, `users/${this.auth.currentUser.uid}`)
-  //     );
-  //     return snapshot.data();
-  //   }
 }
