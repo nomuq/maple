@@ -14,18 +14,10 @@ export default function Router() {
 
   React.useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
+      setIsLoading(false);
       if (user) {
-        (async () => {
-          try {
-            await UserService.getInstance().updateUser();
-            setIsLoading(false);
-            setIsAuthenticated(true);
-          } catch (error) {
-            toast.error(error.message);
-          }
-        })();
+        setIsAuthenticated(true);
       } else {
-        setIsLoading(false);
         setIsAuthenticated(false);
       }
     });

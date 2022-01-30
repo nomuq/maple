@@ -4,6 +4,7 @@ import { Button, Form } from "../components";
 import { font } from "../styles/styles";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import toast from "../utils/toast";
+import { UserService } from "../services/UserService";
 
 export const FormElement = styled(Form.Element)`
   padding: 25px 40px 35px;
@@ -66,6 +67,13 @@ export default function Login() {
                 signInWithPopup(auth, provider)
                   .then((result) => {
                     // setIsLoading(false);
+                    (async () => {
+                      try {
+                        await UserService.getInstance().updateUser();
+                      } catch (error) {
+                        toast.error(error.message);
+                      }
+                    })();
                   })
                   .catch((error) => {
                     setIsLoading(false);

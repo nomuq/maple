@@ -49,9 +49,7 @@ export default function Dashboard() {
     <Projects>
       <Header>
         <Title>Projects</Title>
-        <Button icon="plus" variant="primary">
-          Create Project
-        </Button>
+        <Button variant="primary">Create Project</Button>
       </Header>
     </Projects>
   );
