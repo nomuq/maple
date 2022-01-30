@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { uniqueId } from 'lodash';
+import React from "react";
+import PropTypes from "prop-types";
+import { uniqueId } from "lodash";
 
-import Input from '../Input';
-import Select from '../Select';
-import Textarea from '../Textarea';
-import TextEditor from '../TextEditor';
-import DatePicker from '../DatePicker';
+import Input from "../Input";
+import Select from "../Select";
+import Textarea from "../Textarea";
+import TextEditor from "../TextEditor";
+import DatePicker from "../DatePicker";
 
-import { StyledField, FieldLabel, FieldTip, FieldError } from './Styles';
+import { StyledField, FieldLabel, FieldTip, FieldError } from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
@@ -26,18 +26,30 @@ const defaultProps = {
   name: undefined,
 };
 
-const generateField = FormComponent => {
-  const FieldComponent = ({ className, label, tip, error, name, ...otherProps }) => {
-    const fieldId = uniqueId('form-field-');
+const generateField = (FormComponent) => {
+  const FieldComponent = ({
+    className,
+    label,
+    tip,
+    error,
+    name,
+    ...otherProps
+  }) => {
+    const fieldId = uniqueId("form-field-");
 
     return (
       <StyledField
         className={className}
         hasLabel={!!label}
-        data-testid={name ? `form-field:${name}` : 'form-field'}
+        data-testid={name ? `form-field:${name}` : "form-field"}
       >
         {label && <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>}
-        <FormComponent id={fieldId} invalid={!!error} name={name} {...otherProps} />
+        <FormComponent
+          id={fieldId}
+          invalid={!!error}
+          name={name}
+          {...otherProps}
+        />
         {tip && <FieldTip>{tip}</FieldTip>}
         {error && <FieldError>{error}</FieldError>}
       </StyledField>

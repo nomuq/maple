@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 
-import { Container, Divider } from './Styles';
+import { Container, Divider } from "./Styles";
 
 const propTypes = {
   items: PropTypes.array.isRequired,

@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef } from "react";
+import PropTypes from "prop-types";
 
-import useOnOutsideClick from '../../hooks/onOutsideClick';
-import Icon from '../Icon';
+import useOnOutsideClick from "../../hooks/onOutsideClick";
+import Icon from "../Icon";
 
-import Dropdown from './Dropdown';
+import Dropdown from "./Dropdown";
 import {
   StyledSelect,
   ValueContainer,
@@ -13,15 +13,19 @@ import {
   ValueMulti,
   ValueMultiItem,
   AddMore,
-} from './Styles';
-import { KeyCodes } from '../../constants/keyCodes';
+} from "./Styles";
+import { KeyCodes } from "../../constants/keyCodes";
 
 const propTypes = {
   className: PropTypes.string,
-  variant: PropTypes.oneOf(['normal', 'empty']),
+  variant: PropTypes.oneOf(["normal", "empty"]),
   dropdownWidth: PropTypes.number,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   defaultValue: PropTypes.any,
   placeholder: PropTypes.string,
   invalid: PropTypes.bool,
@@ -36,12 +40,12 @@ const propTypes = {
 
 const defaultProps = {
   className: undefined,
-  variant: 'normal',
+  variant: "normal",
   dropdownWidth: undefined,
   name: undefined,
   value: undefined,
   defaultValue: undefined,
-  placeholder: 'Select',
+  placeholder: "Select",
   invalid: false,
   onCreate: undefined,
   isMulti: false,
@@ -67,9 +71,11 @@ const Select = ({
   renderValue: propsRenderValue,
   renderOption: propsRenderOption,
 }) => {
-  const [stateValue, setStateValue] = useState(defaultValue || (isMulti ? [] : null));
+  const [stateValue, setStateValue] = useState(
+    defaultValue || (isMulti ? [] : null)
+  );
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   const isControlled = propsValue !== undefined;
   const value = isControlled ? propsValue : stateValue;
@@ -87,14 +93,16 @@ const Select = ({
 
   const deactivateDropdown = () => {
     setDropdownOpen(false);
-    setSearchValue('');
+    setSearchValue("");
     $selectRef.current.focus();
   };
 
   useOnOutsideClick($selectRef, isDropdownOpen, deactivateDropdown);
 
-  const preserveValueType = newValue => {
-    const areOptionValuesNumbers = options.some(option => typeof option.value === 'number');
+  const preserveValueType = (newValue) => {
+    const areOptionValuesNumbers = options.some(
+      (option) => typeof option.value === "number"
+    );
 
     if (areOptionValuesNumbers) {
       if (isMulti) {
@@ -107,30 +115,36 @@ const Select = ({
     return newValue;
   };
 
-  const handleChange = newValue => {
+  const handleChange = (newValue) => {
     if (!isControlled) {
       setStateValue(preserveValueType(newValue));
     }
     onChange(preserveValueType(newValue));
   };
 
-  const removeOptionValue = optionValue => {
-    handleChange(value.filter(val => val !== optionValue));
+  const removeOptionValue = (optionValue) => {
+    handleChange(value.filter((val) => val !== optionValue));
   };
 
-  const handleFocusedSelectKeydown = event => {
+  const handleFocusedSelectKeydown = (event) => {
     if (isDropdownOpen) return;
 
     if (event.keyCode === KeyCodes.ENTER) {
       event.preventDefault();
     }
-    if (event.keyCode !== KeyCodes.ESCAPE && event.keyCode !== KeyCodes.TAB && !event.shiftKey) {
+    if (
+      event.keyCode !== KeyCodes.ESCAPE &&
+      event.keyCode !== KeyCodes.TAB &&
+      !event.shiftKey
+    ) {
       setDropdownOpen(true);
     }
   };
 
-  const getOption = optionValue => options.find(option => option.value === optionValue);
-  const getOptionLabel = optionValue => (getOption(optionValue) || { label: '' }).label;
+  const getOption = (optionValue) =>
+    options.find((option) => option.value === optionValue);
+  const getOptionLabel = (optionValue) =>
+    (getOption(optionValue) || { label: "" }).label;
 
   const isValueEmpty = isMulti ? !value.length : !getOption(value);
 
@@ -145,7 +159,7 @@ const Select = ({
     >
       <ValueContainer
         variant={variant}
-        data-testid={name ? `select:${name}` : 'select'}
+        data-testid={name ? `select:${name}` : "select"}
         onClick={activateDropdown}
       >
         {isValueEmpty && <Placeholder>{placeholder}</Placeholder>}
@@ -156,18 +170,21 @@ const Select = ({
 
         {!isValueEmpty && isMulti && (
           <ValueMulti variant={variant}>
-            {value.map(optionValue =>
+            {value.map((optionValue) =>
               propsRenderValue ? (
                 propsRenderValue({
                   value: optionValue,
                   removeOptionValue: () => removeOptionValue(optionValue),
                 })
               ) : (
-                <ValueMultiItem key={optionValue} onClick={() => removeOptionValue(optionValue)}>
+                <ValueMultiItem
+                  key={optionValue}
+                  onClick={() => removeOptionValue(optionValue)}
+                >
                   {getOptionLabel(optionValue)}
                   <Icon type="close" size={14} />
                 </ValueMultiItem>
-              ),
+              )
             )}
             <AddMore>
               <Icon type="plus" />
@@ -176,7 +193,7 @@ const Select = ({
           </ValueMulti>
         )}
 
-        {(!isMulti || isValueEmpty) && variant !== 'empty' && (
+        {(!isMulti || isValueEmpty) && variant !== "empty" && (
           <ChevronIcon type="chevron-down" top={1} />
         )}
       </ValueContainer>

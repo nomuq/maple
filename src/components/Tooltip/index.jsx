@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useRef, useLayoutEffect } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import React, { Fragment, useState, useRef, useLayoutEffect } from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
-import useOnOutsideClick from '../../hooks/onOutsideClick';
+import useOnOutsideClick from "../../hooks/onOutsideClick";
 
-import { StyledTooltip } from './Styles';
+import { StyledTooltip } from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
-  placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+  placement: PropTypes.oneOf(["top", "right", "bottom", "left"]),
   offset: PropTypes.shape({
     top: PropTypes.number,
     left: PropTypes.number,
@@ -20,14 +20,21 @@ const propTypes = {
 
 const defaultProps = {
   className: undefined,
-  placement: 'bottom',
+  placement: "bottom",
   offset: {
     top: 0,
     left: 0,
   },
 };
 
-const Tooltip = ({ className, placement, offset, width, renderLink, renderContent }) => {
+const Tooltip = ({
+  className,
+  placement,
+  offset,
+  width,
+  renderLink,
+  renderContent,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const $linkRef = useRef();
@@ -40,33 +47,41 @@ const Tooltip = ({ className, placement, offset, width, renderLink, renderConten
 
   useLayoutEffect(() => {
     const setTooltipPosition = () => {
-      const { top, left } = calcPosition(offset, placement, $tooltipRef, $linkRef);
+      const { top, left } = calcPosition(
+        offset,
+        placement,
+        $tooltipRef,
+        $linkRef
+      );
       $tooltipRef.current.style.top = `${top}px`;
       $tooltipRef.current.style.left = `${left}px`;
     };
 
     if (isOpen) {
       setTooltipPosition();
-      window.addEventListener('resize', setTooltipPosition);
-      window.addEventListener('scroll', setTooltipPosition);
+      window.addEventListener("resize", setTooltipPosition);
+      window.addEventListener("scroll", setTooltipPosition);
     }
 
     return () => {
-      window.removeEventListener('resize', setTooltipPosition);
-      window.removeEventListener('scroll', setTooltipPosition);
+      window.removeEventListener("resize", setTooltipPosition);
+      window.removeEventListener("scroll", setTooltipPosition);
     };
   }, [isOpen, offset, placement]);
 
   return (
     <Fragment>
-      {renderLink({ ref: $linkRef, onClick: isOpen ? closeTooltip : openTooltip })}
+      {renderLink({
+        ref: $linkRef,
+        onClick: isOpen ? closeTooltip : openTooltip,
+      })}
 
       {isOpen &&
         ReactDOM.createPortal(
           <StyledTooltip className={className} ref={$tooltipRef} width={width}>
             {renderContent({ close: closeTooltip })}
           </StyledTooltip>,
-          $root,
+          $root
         )}
     </Fragment>
   );
@@ -106,7 +121,7 @@ const calcPosition = (offset, placement, $tooltipRef, $linkRef) => {
   };
 };
 
-const $root = document.getElementById('root');
+const $root = document.getElementById("root");
 
 Tooltip.propTypes = propTypes;
 Tooltip.defaultProps = defaultProps;

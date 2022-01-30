@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef } from "react";
+import PropTypes from "prop-types";
 
-import { formatDate, formatDateTime } from '../../utils/dateTime';
-import Input from '../Input';
+import { formatDate, formatDateTime } from "../../utils/dateTime";
+import Input from "../Input";
 
-import DateSection from './DateSection';
-import TimeSection from './TimeSection';
-import { StyledDatePicker, Dropdown } from './Styles';
-import useOnOutsideClick from '../../hooks/onOutsideClick';
+import DateSection from "./DateSection";
+import TimeSection from "./TimeSection";
+import { StyledDatePicker, Dropdown } from "./Styles";
+import useOnOutsideClick from "../../hooks/onOutsideClick";
 
 const propTypes = {
   className: PropTypes.string,
@@ -22,11 +22,19 @@ const defaultProps = {
   value: undefined,
 };
 
-const DatePicker = ({ className, withTime, value, onChange, ...inputProps }) => {
+const DatePicker = ({
+  className,
+  withTime,
+  value,
+  onChange,
+  ...inputProps
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const $containerRef = useRef();
 
-  useOnOutsideClick($containerRef, isDropdownOpen, () => setDropdownOpen(false));
+  useOnOutsideClick($containerRef, isDropdownOpen, () =>
+    setDropdownOpen(false)
+  );
 
   return (
     <StyledDatePicker ref={$containerRef}>
@@ -47,7 +55,11 @@ const DatePicker = ({ className, withTime, value, onChange, ...inputProps }) => 
             setDropdownOpen={setDropdownOpen}
           />
           {withTime && (
-            <TimeSection value={value} onChange={onChange} setDropdownOpen={setDropdownOpen} />
+            <TimeSection
+              value={value}
+              onChange={onChange}
+              setDropdownOpen={setDropdownOpen}
+            />
           )}
         </Dropdown>
       )}
@@ -56,7 +68,7 @@ const DatePicker = ({ className, withTime, value, onChange, ...inputProps }) => 
 };
 
 const getFormattedInputValue = (value, withTime) => {
-  if (!value) return '';
+  if (!value) return "";
   return withTime ? formatDateTime(value) : formatDate(value);
 };
 

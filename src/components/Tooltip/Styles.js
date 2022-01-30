@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { zIndexValues, mixin } from '../../styles/styles';
+import { zIndexValues, mixin } from "../../styles/styles";
 
 export const StyledTooltip = styled.div`
   z-index: ${zIndexValues.modal + 1};
   position: fixed;
-  width: ${props => props.width}px;
+  width: ${(props) => props.width}px;
   border-radius: 3px;
   background: #fff;
   ${mixin.hardwareAccelerate}

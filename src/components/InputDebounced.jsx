@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { debounce } from 'lodash';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
+import { debounce } from "lodash";
 
-import { Input } from '.';
+import { Input } from ".";
 
 const propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -18,8 +18,8 @@ const InputDebounced = ({ onChange, value: propsValue, ...inputProps }) => {
   const isControlled = propsValue !== undefined;
 
   const handleChange = useCallback(
-    debounce(newValue => onChange(newValue), 500),
-    [],
+    debounce((newValue) => onChange(newValue), 500),
+    []
   );
 
   const valueRef = useRef(value);
@@ -35,7 +35,7 @@ const InputDebounced = ({ onChange, value: propsValue, ...inputProps }) => {
     <Input
       {...inputProps}
       value={isControlled ? value : undefined}
-      onChange={newValue => {
+      onChange={(newValue) => {
         setValue(newValue);
         handleChange(newValue);
       }}

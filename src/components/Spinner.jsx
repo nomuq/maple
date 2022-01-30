@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { color as colors } from '../styles/styles';
+import { color as colors } from "../styles/styles";
 
 const propTypes = {
   className: PropTypes.string,
@@ -23,7 +23,7 @@ const Spinner = ({ className, size, color }) => (
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
-      style={{ background: '0 0' }}
+      style={{ background: "0 0" }}
     >
       <g>
         <g transform="translate(80 50)">

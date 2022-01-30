@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { color, font, mixin } from '../../styles/styles';
-import { Icon } from '..';
+import { color, font, mixin } from "../../styles/styles";
+import { Icon } from "..";
 
-import imageBackground from './assets/background-forest.jpg';
+import imageBackground from "./assets/background-forest.jpg";
 
 export const ErrorPage = styled.div`
   padding: 64px;

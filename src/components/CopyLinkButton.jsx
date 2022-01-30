@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button } from '.';
+import React, { useState } from "react";
+import { Button } from ".";
 
-import { copyToClipboard } from '../utils/browser';
+import { copyToClipboard } from "../utils/browser";
 
 const CopyLinkButton = ({ ...buttonProps }) => {
   const [isLinkCopied, setLinkCopied] = useState(false);
@@ -14,7 +14,7 @@ const CopyLinkButton = ({ ...buttonProps }) => {
 
   return (
     <Button icon="link" onClick={handleLinkCopy} {...buttonProps}>
-      {isLinkCopied ? 'Link Copied' : 'Copy link'}
+      {isLinkCopied ? "Link Copied" : "Copy link"}
     </Button>
   );
 };

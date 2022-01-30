@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { color, font } from '../../styles/styles';
+import { color, font } from "../../styles/styles";
 
 export const StyledField = styled.div`
   margin-top: 20px;

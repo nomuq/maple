@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Spinner from '../Spinner';
+import Spinner from "../Spinner";
 
-import StyledPageLoader from './Styles';
+import StyledPageLoader from "./Styles";
 
 const PageLoader = () => (
   <StyledPageLoader>

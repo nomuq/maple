@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const propTypes = {
   className: PropTypes.string,
@@ -13,7 +13,11 @@ const defaultProps = {
 
 const Logo = ({ className, size }) => (
   <span className={className}>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.76 75.76" width={size}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 75.76 75.76"
+      width={size}
+    >
       <defs>
         <linearGradient
           id="linear-gradient"
@@ -39,15 +43,15 @@ const Logo = ({ className, size }) => (
       <g id="Layer_2" data-name="Layer 2">
         <g id="Blue">
           <path
-            style={{ fill: '#DEEBFE' }}
+            style={{ fill: "#DEEBFE" }}
             d="M72.4,35.76,39.8,3.16,36.64,0h0L12.1,24.54h0L.88,35.76A3,3,0,0,0,.88,40L23.3,62.42,36.64,75.76,61.18,51.22l.38-.38L72.4,40A3,3,0,0,0,72.4,35.76ZM36.64,49.08l-11.2-11.2,11.2-11.2,11.2,11.2Z"
           />
           <path
-            style={{ fill: 'url(#linear-gradient)' }}
+            style={{ fill: "url(#linear-gradient)" }}
             d="M36.64,26.68A18.86,18.86,0,0,1,36.56.09L12.05,24.59,25.39,37.93,36.64,26.68Z"
           />
           <path
-            style={{ fill: 'url(#linear-gradient-2)' }}
+            style={{ fill: "url(#linear-gradient-2)" }}
             d="M47.87,37.85,36.64,49.08a18.86,18.86,0,0,1,0,26.68h0L61.21,51.19Z"
           />
         </g>

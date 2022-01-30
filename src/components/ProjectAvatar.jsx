@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const propTypes = {
   className: PropTypes.string,
@@ -24,7 +24,13 @@ const ProjectAvatar = ({ className, size }) => (
       <defs>
         <rect id="path-1" x="0" y="0" width="128" height="128" />
       </defs>
-      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g
+        id="Page-1"
+        stroke="none"
+        strokeWidth="1"
+        fill="none"
+        fillRule="evenodd"
+      >
         <g id="project_avatar_settings">
           <g>
             <mask id="mask-2" fill="white">

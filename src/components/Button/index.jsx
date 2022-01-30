@@ -1,15 +1,21 @@
-import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef } from "react";
+import PropTypes from "prop-types";
 
-import { color } from '../../styles/styles';
-import Icon from '../Icon';
+import { color } from "../../styles/styles";
+import Icon from "../Icon";
 
-import { StyledButton, StyledSpinner, Text } from './Styles';
+import { StyledButton, StyledSpinner, Text } from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
-  variant: PropTypes.oneOf(['primary', 'success', 'danger', 'secondary', 'empty']),
+  variant: PropTypes.oneOf([
+    "primary",
+    "success",
+    "danger",
+    "secondary",
+    "empty",
+  ]),
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   iconSize: PropTypes.number,
   disabled: PropTypes.bool,
@@ -20,7 +26,7 @@ const propTypes = {
 const defaultProps = {
   className: undefined,
   children: undefined,
-  variant: 'secondary',
+  variant: "secondary",
   icon: undefined,
   iconSize: 18,
   disabled: false,
@@ -29,7 +35,19 @@ const defaultProps = {
 };
 
 const Button = forwardRef(
-  ({ children, variant, icon, iconSize, disabled, isWorking, onClick, ...buttonProps }, ref) => {
+  (
+    {
+      children,
+      variant,
+      icon,
+      iconSize,
+      disabled,
+      isWorking,
+      onClick,
+      ...buttonProps
+    },
+    ref
+  ) => {
     const handleClick = () => {
       if (!disabled && !isWorking) {
         onClick();
@@ -48,7 +66,7 @@ const Button = forwardRef(
       >
         {isWorking && <StyledSpinner size={26} color={getIconColor(variant)} />}
 
-        {!isWorking && icon && typeof icon === 'string' ? (
+        {!isWorking && icon && typeof icon === "string" ? (
           <Icon type={icon} size={iconSize} color={getIconColor(variant)} />
         ) : (
           icon
@@ -56,11 +74,11 @@ const Button = forwardRef(
         {children && <Text withPadding={isWorking || icon}>{children}</Text>}
       </StyledButton>
     );
-  },
+  }
 );
 
-const getIconColor = variant =>
-  ['secondary', 'empty'].includes(variant) ? color.textDark : '#fff';
+const getIconColor = (variant) =>
+  ["secondary", "empty"].includes(variant) ? color.textDark : "#fff";
 
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;

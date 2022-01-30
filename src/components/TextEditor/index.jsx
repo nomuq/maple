@@ -1,9 +1,9 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
+import React, { useLayoutEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
 
-import { EditorCont } from './Styles';
+import { EditorCont } from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
@@ -36,7 +36,7 @@ const TextEditor = ({
 }) => {
   const $editorContRef = useRef();
   const $editorRef = useRef();
-  const initialValueRef = useRef(defaultValue || alsoDefaultValue || '');
+  const initialValueRef = useRef(defaultValue || alsoDefaultValue || "");
 
   useLayoutEffect(() => {
     let quill = new Quill($editorRef.current, { placeholder, ...quillConfig });
@@ -48,14 +48,15 @@ const TextEditor = ({
     const handleContentsChange = () => {
       onChange(getHTMLValue());
     };
-    const getHTMLValue = () => $editorContRef.current.querySelector('.ql-editor').innerHTML;
+    const getHTMLValue = () =>
+      $editorContRef.current.querySelector(".ql-editor").innerHTML;
 
     insertInitialValue();
     getEditor({ getValue: getHTMLValue });
 
-    quill.on('text-change', handleContentsChange);
+    quill.on("text-change", handleContentsChange);
     return () => {
-      quill.off('text-change', handleContentsChange);
+      quill.off("text-change", handleContentsChange);
       quill = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,15 +70,15 @@ const TextEditor = ({
 };
 
 const quillConfig = {
-  theme: 'snow',
+  theme: "snow",
   modules: {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],
-      ['blockquote', 'code-block'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
+      ["bold", "italic", "underline", "strike"],
+      ["blockquote", "code-block"],
+      [{ list: "ordered" }, { list: "bullet" }],
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ color: [] }, { background: [] }],
-      ['clean'],
+      ["clean"],
     ],
   },
 };

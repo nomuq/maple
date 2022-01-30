@@ -1,16 +1,27 @@
-import React, { Fragment, useState, useRef, useEffect, useCallback } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import React, {
+  Fragment,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
-import useOnOutsideClick from '../../hooks/onOutsideClick';
-import useOnEscapeKeyDown from '../../hooks/onEscapeKeyDown';
+import useOnOutsideClick from "../../hooks/onOutsideClick";
+import useOnEscapeKeyDown from "../../hooks/onEscapeKeyDown";
 
-import { ScrollOverlay, ClickableOverlay, StyledModal, CloseIcon } from './Styles';
+import {
+  ScrollOverlay,
+  ClickableOverlay,
+  StyledModal,
+  CloseIcon,
+} from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
   testid: PropTypes.string,
-  variant: PropTypes.oneOf(['center', 'aside']),
+  variant: PropTypes.oneOf(["center", "aside"]),
   width: PropTypes.number,
   withCloseIcon: PropTypes.bool,
   isOpen: PropTypes.bool,
@@ -21,8 +32,8 @@ const propTypes = {
 
 const defaultProps = {
   className: undefined,
-  testid: 'modal',
-  variant: 'center',
+  testid: "modal",
+  variant: "center",
   width: 600,
   withCloseIcon: true,
   isOpen: undefined,
@@ -42,7 +53,7 @@ const Modal = ({
   renderContent,
 }) => {
   const [stateIsOpen, setStateOpen] = useState(false);
-  const isControlled = typeof propsIsOpen === 'boolean';
+  const isControlled = typeof propsIsOpen === "boolean";
   const isOpen = isControlled ? propsIsOpen : stateIsOpen;
 
   const $modalRef = useRef();
@@ -60,10 +71,10 @@ const Modal = ({
   useOnEscapeKeyDown(isOpen, closeModal);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = 'visible';
+      document.body.style.overflow = "visible";
     };
   }, [isOpen]);
 
@@ -82,18 +93,24 @@ const Modal = ({
                 data-testid={testid}
                 ref={$modalRef}
               >
-                {withCloseIcon && <CloseIcon type="close" variant={variant} onClick={closeModal} />}
+                {withCloseIcon && (
+                  <CloseIcon
+                    type="close"
+                    variant={variant}
+                    onClick={closeModal}
+                  />
+                )}
                 {renderContent({ close: closeModal })}
               </StyledModal>
             </ClickableOverlay>
           </ScrollOverlay>,
-          $root,
+          $root
         )}
     </Fragment>
   );
 };
 
-const $root = document.getElementById('root');
+const $root = document.getElementById("root");
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;

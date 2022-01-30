@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import { color, font } from '../../styles/styles';
-import Icon from '../Icon';
+import { color, font } from "../../styles/styles";
+import Icon from "../Icon";
 
 export const StyledInput = styled.div`
   position: relative;
@@ -21,7 +21,7 @@ export const InputElement = styled.input`
   transition: background 0.1s;
   ${font.regular}
   ${font.size(15)}
-  ${props => props.hasIcon && 'padding-left: 32px;'}
+  ${(props) => props.hasIcon && "padding-left: 32px;"}
   &:hover {
     background: ${color.backgroundLight};
   }
@@ -30,7 +30,7 @@ export const InputElement = styled.input`
     border: 1px solid ${color.borderInputFocus};
     box-shadow: 0 0 0 1px ${color.borderInputFocus};
   }
-  ${props =>
+  ${(props) =>
     props.invalid &&
     css`
       &,

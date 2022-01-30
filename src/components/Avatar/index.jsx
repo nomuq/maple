@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Image, Letter } from './Styles';
+import { Image, Letter } from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
@@ -13,7 +13,7 @@ const propTypes = {
 const defaultProps = {
   className: undefined,
   avatarUrl: null,
-  name: '',
+  name: "",
   size: 32,
 };
 
@@ -21,7 +21,7 @@ const Avatar = ({ className, avatarUrl, name, size, ...otherProps }) => {
   const sharedProps = {
     className,
     size,
-    'data-testid': name ? `avatar:${name}` : 'avatar',
+    "data-testid": name ? `avatar:${name}` : "avatar",
     ...otherProps,
   };
 
@@ -37,17 +37,18 @@ const Avatar = ({ className, avatarUrl, name, size, ...otherProps }) => {
 };
 
 const colors = [
-  '#DA7657',
-  '#6ADA57',
-  '#5784DA',
-  '#AA57DA',
-  '#DA5757',
-  '#DA5792',
-  '#57DACA',
-  '#57A5DA',
+  "#DA7657",
+  "#6ADA57",
+  "#5784DA",
+  "#AA57DA",
+  "#DA5757",
+  "#DA5792",
+  "#57DACA",
+  "#57A5DA",
 ];
 
-const getColorFromName = name => colors[name.toLocaleLowerCase().charCodeAt(0) % colors.length];
+const getColorFromName = (name) =>
+  colors[name.toLocaleLowerCase().charCodeAt(0) % colors.length];
 
 Avatar.propTypes = propTypes;
 Avatar.defaultProps = defaultProps;

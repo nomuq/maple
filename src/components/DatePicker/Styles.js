@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import { color, font, mixin, zIndexValues } from '../../styles/styles';
+import { color, font, mixin, zIndexValues } from "../../styles/styles";
 
 export const StyledDatePicker = styled.div`
   position: relative;
@@ -15,7 +15,7 @@ export const Dropdown = styled.div`
   border-radius: 3px;
   background: #fff;
   ${mixin.boxShadowDropdown}
-  ${props =>
+  ${(props) =>
     props.withTime &&
     css`
       width: 360px;
@@ -78,9 +78,9 @@ export const Day = styled.div`
   line-height: 30px;
   border-radius: 3px;
   ${font.size(15)}
-  ${props => !props.isFiller && hoverStyles}
-  ${props => props.isToday && font.bold}
-  ${props => props.isSelected && selectedStyles}
+  ${(props) => !props.isFiller && hoverStyles}
+  ${(props) => props.isToday && font.bold}
+  ${(props) => props.isSelected && selectedStyles}
 `;
 
 export const TimeSection = styled.div`
@@ -97,8 +97,8 @@ export const TimeSection = styled.div`
 export const Time = styled.div`
   padding: 5px 0 5px 20px;
   ${font.size(14)}
-  ${props => !props.isFiller && hoverStyles}
-  ${props => props.isSelected && selectedStyles}
+  ${(props) => !props.isFiller && hoverStyles}
+  ${(props) => props.isSelected && selectedStyles}
 `;
 
 const hoverStyles = css`

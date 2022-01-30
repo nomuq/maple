@@ -1,11 +1,17 @@
-import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, useState } from "react";
+import PropTypes from "prop-types";
 
-import { StyledConfirmModal, Title, Message, Actions, StyledButton } from './Styles';
+import {
+  StyledConfirmModal,
+  Title,
+  Message,
+  Actions,
+  StyledButton,
+} from "./Styles";
 
 const propTypes = {
   className: PropTypes.string,
-  variant: PropTypes.oneOf(['primary', 'danger']),
+  variant: PropTypes.oneOf(["primary", "danger"]),
   title: PropTypes.string,
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   confirmText: PropTypes.string,
@@ -16,11 +22,11 @@ const propTypes = {
 
 const defaultProps = {
   className: undefined,
-  variant: 'primary',
-  title: 'Warning',
-  message: 'Are you sure you want to continue with this action?',
-  confirmText: 'Confirm',
-  cancelText: 'Cancel',
+  variant: "primary",
+  title: "Warning",
+  message: "Are you sure you want to continue with this action?",
+  confirmText: "Confirm",
+  cancelText: "Cancel",
 };
 
 const ConfirmModal = ({
@@ -35,7 +41,7 @@ const ConfirmModal = ({
 }) => {
   const [isWorking, setWorking] = useState(false);
 
-  const handleConfirm = modal => {
+  const handleConfirm = (modal) => {
     setWorking(true);
     onConfirm({
       close: () => {
@@ -51,7 +57,7 @@ const ConfirmModal = ({
       testid="modal:confirm"
       withCloseIcon={false}
       renderLink={renderLink}
-      renderContent={modal => (
+      renderContent={(modal) => (
         <Fragment>
           <Title>{title}</Title>
           {message && <Message>{message}</Message>}

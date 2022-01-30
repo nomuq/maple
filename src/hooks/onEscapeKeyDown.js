@@ -1,19 +1,19 @@
-import { useEffect } from 'react';
-import { KeyCodes } from '../constants/keyCodes';
+import { useEffect } from "react";
+import { KeyCodes } from "../constants/keyCodes";
 
 const useOnEscapeKeyDown = (isListening, onEscapeKeyDown) => {
   useEffect(() => {
-    const handleKeyDown = event => {
+    const handleKeyDown = (event) => {
       if (event.keyCode === KeyCodes.ESCAPE) {
         onEscapeKeyDown();
       }
     };
 
     if (isListening) {
-      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isListening, onEscapeKeyDown]);
 };

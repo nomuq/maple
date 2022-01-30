@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { font } from '../../styles/styles';
-import Modal from '../Modal';
-import Button from '../Button';
+import { font } from "../../styles/styles";
+import Modal from "../Modal";
+import Button from "../Button";
 
 export const StyledConfirmModal = styled(Modal)`
   padding: 35px 40px 40px;
