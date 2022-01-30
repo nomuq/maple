@@ -1,12 +1,9 @@
 import { getAuth } from "firebase/auth";
 import React from "react";
-import { Fragment } from "react/cjs/react.production.min";
 import { Button, PageLoader } from "../components";
 import { ProjectService } from "../services/ProjectService";
 import styled from "styled-components";
 import { font, sizes } from "../styles/styles";
-
-const paddingLeft = sizes.appNavBarLeftWidth + sizes.secondarySideBarWidth + 40;
 
 export const Projects = styled.div`
   padding: 25px;
@@ -46,11 +43,13 @@ export default function Dashboard() {
   }
 
   return (
-    <Projects>
-      <Header>
-        <Title>Projects</Title>
-        <Button variant="primary">Create Project</Button>
-      </Header>
-    </Projects>
+    <>
+      <Projects>
+        <Header>
+          <Title>Projects</Title>
+          <Button variant="primary">Create Project</Button>
+        </Header>
+      </Projects>
+    </>
   );
 }
