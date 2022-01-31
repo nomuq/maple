@@ -1,23 +1,37 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Route, Routes, useParams, useRoutes } from "react-router-dom";
 import styled from "styled-components";
 import { PageLoader } from "../components";
 import { ProjectService } from "../services/ProjectService";
 import { sizes } from "../styles/styles";
+import toast from "../utils/toast";
+import ProjectNavbarLeft from "./NavbarLeft";
+import ProjectSettings from "./ProjectSettings";
+import ProjectSidebar from "./Sidebar";
 
 export default function Project() {
   const param = useParams();
   const [isLoading, setIsLoading] = React.useState(true);
   const [project, setProject] = React.useState(null);
+
+  //  is issue search modal open
+  const [isIssueSearchModalOpen, setIsIssueSearchModalOpen] =
+    React.useState(false);
+
+  // is issue create modal open
+  const [isIssueCreateModalOpen, setIsIssueCreateModalOpen] =
+    React.useState(false);
+
   React.useEffect(() => {
     (async () => {
       try {
         const project = await ProjectService.getInstance().getProject(param.id);
         setProject(project);
-        setIsLoading(false);
       } catch (error) {
         toast.error(error.message);
       }
+
+      setIsLoading(false);
     })();
   }, []);
 
@@ -29,8 +43,23 @@ export default function Project() {
     return <div>Project not found</div>;
   }
 
-  console.log(project);
-  return <ProjectPage></ProjectPage>;
+  return (
+    <ProjectPage>
+      <ProjectNavbarLeft
+        issueSearchModalOpen={() => setIsIssueSearchModalOpen(true)}
+        issueCreateModalOpen={() => setIsIssueCreateModalOpen(true)}
+      />
+
+      <ProjectSidebar project={project} />
+
+      <Routes>
+        <Route
+          path={`/settings`}
+          element={<ProjectSettings project={project} />}
+        />
+      </Routes>
+    </ProjectPage>
+  );
 }
 
 const paddingLeft = sizes.appNavBarLeftWidth + sizes.secondarySideBarWidth + 40;

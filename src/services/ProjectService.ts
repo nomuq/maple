@@ -60,7 +60,9 @@ export class ProjectService {
   public async getProject(id: string): Promise<Project> {
     const docRef = doc(this.database, `projects/${id}`);
     const project = await getDoc(docRef);
-    return project.data() as Project;
+    const data = project.data() as Project;
+    data.id = project.id;
+    return data;
   }
 
   public async getProjects(): Promise<Project[]> {

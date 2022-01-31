@@ -129,7 +129,7 @@ export default function Dashboard() {
                       content: (
                         <ProjectTitle>
                           <ProjectAvatar size={24} />
-                          <ProjectLink to={`/projects/${project.id}`}>
+                          <ProjectLink to={`/project/${project.id}`}>
                             {project.name}
                           </ProjectLink>
                         </ProjectTitle>

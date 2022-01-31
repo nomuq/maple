@@ -33,7 +33,8 @@ export default function Router() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/projects/:id" element={<Project />} />
+          <Route path="/project/:id/*" element={<Project />} />
+          {/* <Route path="/project/:id/settings" element={<Project />} /> */}
         </Routes>
       </BrowserRouter>
     );

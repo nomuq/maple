@@ -8,7 +8,9 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  query,
   setDoc,
+  where,
 } from "firebase/firestore";
 
 export class UserService {
@@ -44,5 +46,16 @@ export class UserService {
   public async getUsers(): Promise<UserInfo[]> {
     const snapshot = await getDocs(collection(this.database, `users`));
     return snapshot.docs.map((doc) => doc.data() as UserInfo);
+  }
+
+  public async getUsersByIds(ids: string[]): Promise<UserInfo[]> {
+    const q = query(
+      collection(this.database, "users"),
+      where("uid", "in", ids)
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => doc.data() as UserInfo);
+    // const snapshot = await getDocs(collection(this.database, `users`));
+    // return snapshot.docs.map((doc) => doc.data() as UserInfo);
   }
 }
