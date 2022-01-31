@@ -2,9 +2,11 @@ import { getAuth, User } from "firebase/auth";
 import {
   addDoc,
   collection,
+  doc,
   DocumentData,
   DocumentReference,
   Firestore,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -53,6 +55,12 @@ export class ProjectService {
       ProjectService.instance = new ProjectService();
     }
     return ProjectService.instance;
+  }
+
+  public async getProject(id: string): Promise<Project> {
+    const docRef = doc(this.database, `projects/${id}`);
+    const project = await getDoc(docRef);
+    return project.data() as Project;
   }
 
   public async getProjects(): Promise<Project[]> {

@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { UserService } from "./services/UserService";
 import toast from "./utils/toast";
+import Project from "./pages/Project";
 
 export default function Router() {
   const auth = getAuth();
@@ -32,6 +33,7 @@ export default function Router() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/projects/:id" element={<Project />} />
         </Routes>
       </BrowserRouter>
     );
