@@ -1,4 +1,4 @@
-import { getAuth } from "firebase/auth";
+import { getAuth, UserInfo } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -6,6 +6,7 @@ import {
   DocumentData,
   Firestore,
   getDoc,
+  getDocs,
   getFirestore,
   setDoc,
 } from "firebase/firestore";
@@ -38,5 +39,10 @@ export class UserService {
         merge: true,
       }
     );
+  }
+
+  public async getUsers(): Promise<UserInfo[]> {
+    const snapshot = await getDocs(collection(this.database, `users`));
+    return snapshot.docs.map((doc) => doc.data() as UserInfo);
   }
 }

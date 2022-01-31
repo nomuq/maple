@@ -7,6 +7,8 @@ import {
   Firestore,
   getDocs,
   getFirestore,
+  query,
+  where,
 } from "firebase/firestore";
 
 import { StorageReference } from "firebase/storage";
@@ -28,6 +30,7 @@ export enum ProjectType {
 }
 
 export interface Project {
+  id?: string;
   name: string;
   description: string | null;
   category: ProjectCategory;
@@ -35,8 +38,8 @@ export interface Project {
   icon: StorageReference | null;
   createdAt: Date;
   updatedAt: Date;
-  createdBy: DocumentReference;
-  collaborators: DocumentReference[];
+  createdBy: string;
+  collaborators: string[];
 }
 
 export class ProjectService {
@@ -52,19 +55,22 @@ export class ProjectService {
     return ProjectService.instance;
   }
 
-  public async getProjects(): Promise<DocumentData[]> {
-    const snapshot = await getDocs(
-      collection(this.database, `users/${this.auth.currentUser.uid}/projects`)
+  public async getProjects(): Promise<Project[]> {
+    const q = query(
+      collection(this.database, "projects"),
+      where("collaborators", "array-contains", this.auth.currentUser.uid),
+      where("createdBy", "==", this.auth.currentUser.uid)
     );
-    return snapshot.docs.map((doc) => doc.data());
+    const snapshot = await getDocs(collection(this.database, `projects`));
+    return snapshot.docs.map((doc) => {
+      const data = doc.data() as Project;
+      data.id = doc.id;
+      return data;
+    });
   }
 
   public async createProject(project: Project): Promise<DocumentReference> {
     const docRef = await addDoc(collection(this.database, `projects`), project);
-    await addDoc(
-      collection(this.database, `users/${this.auth.currentUser.uid}/projects`),
-      { id: docRef.id }
-    );
     return docRef;
   }
 }
