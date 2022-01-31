@@ -34,7 +34,6 @@ export default function Router() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/project/:id/*" element={<Project />} />
-          {/* <Route path="/project/:id/settings" element={<Project />} /> */}
         </Routes>
       </BrowserRouter>
     );
