@@ -37,12 +37,12 @@ const ProjectSidebar = ({ project }) => {
         "settings",
         `/project/${project.id}/settings`
       )}
-      <Divider />
-      {renderLinkItem("Releases", "shipping")}
+      {/* <Divider /> */}
+      {/* {renderLinkItem("Releases", "shipping")} */}
       {/* {renderLinkItem("Issues and filters", "issues")} */}
-      {renderLinkItem("Pages", "page")}
-      {renderLinkItem("Reports", "reports")}
-      {renderLinkItem("Components", "component")}
+      {/* {renderLinkItem("Pages", "page")} */}
+      {/* {renderLinkItem("Reports", "reports")}
+      {renderLinkItem("Components", "component")} */}
     </Sidebar>
   );
 };
