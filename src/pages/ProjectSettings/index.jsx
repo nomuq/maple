@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { FormCont, FormHeading, FormElement, ActionButton } from "./Styles";
-import { ProjectCategory, ProjectType } from "../../services/ProjectService";
+import {
+  ProjectCategory,
+  ProjectService,
+  ProjectType,
+} from "../../services/ProjectService";
 import toast from "../../utils/toast";
 import { getAuth } from "firebase/auth";
 import { Avatar, Form, Icon, PageLoader } from "../../components";
@@ -34,7 +38,7 @@ const ProjectSettings = ({ project }) => {
     })();
   }, []);
 
-  if (isLoading) {
+  if (users.length === 0) {
     return <PageLoader />;
   }
 
@@ -57,14 +61,15 @@ const ProjectSettings = ({ project }) => {
       onSubmit={async (values, form) => {
         setIsLoading(true);
         try {
-          await ProjectService.getInstance().createProject({
+          await ProjectService.getInstance().updateProject({
+            ...project,
             ...values,
-            createdBy: auth.currentUser.uid,
           });
-          onCreate();
+          toast.success("Project updated successfully");
         } catch (error) {
           toast.error(error.message);
         }
+        setIsLoading(false);
       }}
     >
       <FormElement>

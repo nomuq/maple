@@ -10,6 +10,8 @@ import {
   getDocs,
   getFirestore,
   query,
+  setDoc,
+  Timestamp,
   where,
 } from "firebase/firestore";
 
@@ -80,7 +82,36 @@ export class ProjectService {
   }
 
   public async createProject(project: Project): Promise<DocumentReference> {
-    const docRef = await addDoc(collection(this.database, `projects`), project);
+    const docRef = await addDoc(collection(this.database, `projects`), {
+      name: project.name,
+      description: project.description,
+      category: project.category,
+      type: project.type,
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+      createdBy: project.createdBy,
+      collaborators: project.collaborators,
+    });
     return docRef;
+  }
+
+  public async updateProject(project: Project): Promise<void> {
+    const docRef = doc(this.database, `projects/${project.id}`);
+    await setDoc(
+      docRef,
+      {
+        name: project.name,
+        description: project.description,
+        category: project.category,
+        type: project.type,
+        createdAt: project.createdAt ?? Timestamp.now(),
+        updatedAt: Timestamp.now(),
+        createdBy: project.createdBy,
+        collaborators: project.collaborators,
+      },
+      {
+        merge: true,
+      }
+    );
   }
 }

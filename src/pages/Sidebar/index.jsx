@@ -20,7 +20,6 @@ const propTypes = {
 };
 
 const ProjectSidebar = ({ project }) => {
-  // const match = useRoutes();
   return (
     <Sidebar>
       <ProjectInfo>
