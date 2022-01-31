@@ -52,9 +52,9 @@ export const Item = styled.div`
   color: #deebff;
   transition: color 0.1s;
   ${mixin.clickable}
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
+  // &:hover {
+  //   background: rgba(255, 255, 255, 0.1);
+  // }
   i {
     position: absolute;
     left: 18px;
@@ -71,9 +71,9 @@ export const ItemText = styled.div`
   transition-property: right, visibility, opacity;
   ${font.bold}
   ${font.size(12)}
-  ${NavLeft}:hover & {
-    right: 0;
-    visibility: visible;
-    opacity: 1;
-  }
+  // ${NavLeft}:hover & {
+  //   right: 0;
+  //   visibility: visible;
+  //   opacity: 1;
+  // }
 `;
