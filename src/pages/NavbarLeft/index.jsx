@@ -32,7 +32,7 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
       <ItemText>Create Issue</ItemText>
     </Item>
 
-    <Bottom>
+    {/* <Bottom>
       <AboutTooltip
         placement="right"
         offset={{ top: -218 }}
@@ -43,7 +43,7 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
           </Item>
         )}
       />
-    </Bottom>
+    </Bottom> */}
   </NavLeft>
 );
 
