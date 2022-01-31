@@ -7,6 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@atlaskit/dynamic-table": "^14.5.0",
     "color": "^4.2.0",
     "firebase": "^9.6.5",
     "formik": "^2.2.9",
