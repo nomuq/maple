@@ -10,6 +10,7 @@ import {
   Assignees,
   AssigneeAvatar,
 } from "./Styles";
+import { IssuePriorityIcon, IssueTypeIcon } from "../../../../../components";
 
 const propTypes = {
   projectUsers: PropTypes.array.isRequired,
@@ -17,18 +18,18 @@ const propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-const ProjectBoardListIssue = ({ projectUsers, issue, index }) => {
+const ProjectBoardListIssue = ({ projectUsers, project, issue, index }) => {
   // const match = useRouteMatch();
 
-  const assignees = issue.userIds.map((userId) =>
-    projectUsers.find((user) => user.id === userId)
+  const assignees = issue.assignees.map((userId) =>
+    projectUsers.find((user) => user.uid === userId)
   );
 
   return (
     <Draggable draggableId={issue.id.toString()} index={index}>
       {(provided, snapshot) => (
         <IssueLink
-          to={`/issues/${issue.id}`}
+          to={`/project/${project.id}/board/${issue.id}`}
           ref={provided.innerRef}
           data-testid="list-issue"
           {...provided.draggableProps}
@@ -50,10 +51,10 @@ const ProjectBoardListIssue = ({ projectUsers, issue, index }) => {
               <Assignees>
                 {assignees.map((user) => (
                   <AssigneeAvatar
-                    key={user.id}
+                    key={user.uid}
                     size={24}
-                    avatarUrl={user.avatarUrl}
-                    name={user.name}
+                    avatarUrl={user.photoURL}
+                    name={user.displayName}
                   />
                 ))}
               </Assignees>

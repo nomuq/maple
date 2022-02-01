@@ -43,6 +43,7 @@ const ProjectBoardList = ({ status, project, filters, currentUserId }) => {
               <Issue
                 key={issue.id}
                 projectUsers={project.users}
+                project={project}
                 issue={issue}
                 index={index}
               />

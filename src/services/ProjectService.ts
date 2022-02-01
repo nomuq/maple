@@ -40,8 +40,7 @@ export enum IssueType {
 }
 
 export enum IssueStatus {
-  BACKLOG = "backlog",
-  SELECTED = "selected",
+  TODO = "todo",
   INPROGRESS = "inprogress",
   DONE = "done",
 }
@@ -69,6 +68,7 @@ export interface Issue {
   updatedAt: Date;
   reporterId: string;
   projectId: string;
+  assignees: string[];
 }
 
 export interface Project {
@@ -152,5 +152,34 @@ export class ProjectService {
         merge: true,
       }
     );
+  }
+
+  public async getIssues(project: Project): Promise<Issue[]> {
+    const issues = await getDocs(
+      collection(this.database, `projects/${project.id}/issues`)
+    );
+
+    return issues.docs.map((doc) => {
+      const data = doc.data() as Issue;
+      data.id = doc.id;
+      return data;
+    });
+  }
+
+  public async createIssue(
+    project: Project,
+    issue: Issue
+  ): Promise<DocumentReference> {
+    const docRef = await addDoc(
+      collection(this.database, `projects/${project.id}/issues`),
+      {
+        ...issue,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
+        status: IssueStatus.TODO,
+        projectId: project.id,
+      }
+    );
+    return docRef;
   }
 }

@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Breadcrumbs, Modal } from "../../components";
 import ProjectBoardHeader from "./Header";
 import ProjectIssueCreate from "./IssueCreate";
@@ -14,6 +15,8 @@ const defaultFilters = {
 const ProjectBoard = ({ project }) => {
   const [filters, setFilters] = useState(defaultFilters);
   const [showCreateIssueModal, setShowCreateIssueModal] = useState(false);
+
+  const navigate = useNavigate();
 
   if (!project.issues) {
     project.issues = [];
@@ -31,9 +34,7 @@ const ProjectBoard = ({ project }) => {
           renderContent={(modal) => (
             <ProjectIssueCreate
               project={project}
-              onCreate={() => {
-                console.log("create issue");
-              }}
+              onCreate={() => setShowCreateIssueModal(false)}
               modalClose={() => setShowCreateIssueModal(false)}
             />
           )}
@@ -49,6 +50,33 @@ const ProjectBoard = ({ project }) => {
         filters={filters}
         updateLocalProjectIssues={() => {}}
       />
+
+      <Routes>
+        <Route
+          path={`/:id`}
+          element={
+            <Modal
+              isOpen
+              testid="modal:issue-details"
+              width={1040}
+              withCloseIcon={false}
+              onClose={() => {
+                navigate("/project/" + project.id + "/board");
+              }}
+              renderContent={(modal) => (
+                <div>Fuck This</div>
+                // <IssueDetails
+                //   issueId={routeProps.match.params.issueId}
+                //   projectUsers={project.users}
+                //   fetchProject={fetchProject}
+                //   updateLocalProjectIssues={updateLocalProjectIssues}
+                //   modalClose={modal.close}
+                // />
+              )}
+            />
+          }
+        />
+      </Routes>
     </Fragment>
   );
 };

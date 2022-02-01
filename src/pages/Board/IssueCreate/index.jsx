@@ -24,6 +24,8 @@ import {
   IssueTypeCopy,
 } from "../../../constants/issues";
 import { getAuth } from "firebase/auth";
+import { ProjectService } from "../../../services/ProjectService";
+import toast from "../../../utils/toast";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -43,7 +45,7 @@ const ProjectIssueCreate = ({ project, onCreate, modalClose }) => {
         title: "",
         description: "",
         reporterId: auth.currentUser.uid,
-        userIds: [],
+        assignees: [],
         priority: IssuePriority.MEDIUM,
       }}
       validations={{
@@ -53,7 +55,15 @@ const ProjectIssueCreate = ({ project, onCreate, modalClose }) => {
         priority: Form.is.required(),
       }}
       onSubmit={async (values, form) => {
-        console.log("values", values);
+        setIsCreating(true);
+        try {
+          await ProjectService.getInstance().createIssue(project, {
+            ...values,
+          });
+          onCreate();
+        } catch (error) {
+          toast.error(error.message);
+        }
       }}
     >
       <FormElement>
@@ -86,7 +96,7 @@ const ProjectIssueCreate = ({ project, onCreate, modalClose }) => {
         />
         <Form.Field.Select
           isMulti
-          name="userIds"
+          name="assignees"
           label="Assignees"
           tio="People who are responsible for dealing with this issue."
           options={userOptions(project)}
@@ -148,7 +158,7 @@ const renderUser =
 
     return (
       <SelectItem
-        key={user.id}
+        key={user.uid}
         withBottomMargin={!!removeOptionValue}
         onClick={() => removeOptionValue && removeOptionValue()}
       >

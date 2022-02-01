@@ -41,6 +41,9 @@ export default function Project() {
         ]);
         project.users = colloborators;
 
+        const issues = await ProjectService.getInstance().getIssues(project);
+        project.issues = issues;
+
         setProject(project);
       } catch (error) {
         toast.error(error.message);
@@ -79,7 +82,7 @@ export default function Project() {
       <ProjectSidebar project={project} />
 
       <Routes>
-        <Route path={`/board`} element={<ProjectBoard project={project} />} />
+        <Route path={`/board/*`} element={<ProjectBoard project={project} />} />
         <Route
           path={`/settings`}
           element={<ProjectSettings project={project} />}

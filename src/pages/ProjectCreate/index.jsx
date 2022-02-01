@@ -18,6 +18,7 @@ import {
 import { Avatar, Form, Icon, IssuePriorityIcon } from "../../components";
 import { UserService } from "../../services/UserService";
 import { getAuth } from "firebase/auth";
+import toast from "../../utils/toast";
 
 const propTypes = {
   onCreate: PropTypes.func.isRequired,
