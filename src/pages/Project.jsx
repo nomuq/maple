@@ -17,6 +17,7 @@ import ProjectNavbarLeft from "./NavbarLeft";
 import ProjectSettings from "./ProjectSettings";
 import ProjectBoard from "./Board";
 import ProjectSidebar from "./Sidebar";
+import { UserService } from "../services/UserService";
 
 export default function Project() {
   const param = useParams();
@@ -33,6 +34,13 @@ export default function Project() {
     (async () => {
       try {
         const project = await ProjectService.getInstance().getProject(param.id);
+
+        const colloborators = await UserService.getInstance().getUsersByIds([
+          ...project.collaborators,
+          project.createdBy,
+        ]);
+        project.users = colloborators;
+
         setProject(project);
       } catch (error) {
         toast.error(error.message);
@@ -47,7 +55,6 @@ export default function Project() {
         },
         pathname
       );
-      console.log(isRootPath);
       if (isRootPath) {
         navigate("/project/" + param.id + "/board");
       }

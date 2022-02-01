@@ -3,16 +3,13 @@ import { Button } from "../../../components";
 
 import { Header, BoardName } from "./Styles";
 
-const ProjectBoardHeader = () => (
+const ProjectBoardHeader = ({ setShowCreateIssueModal }) => (
   <Header>
     <BoardName>Kanban board</BoardName>
-    <a
-      href="https://github.com/oldboyxx/jira_clone"
-      target="_blank"
-      rel="noreferrer noopener"
-    >
-      <Button variant="primary">Create Issue</Button>
-    </a>
+
+    <Button variant="primary" onClick={() => setShowCreateIssueModal()}>
+      Create Issue
+    </Button>
   </Header>
 );
 
