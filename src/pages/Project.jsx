@@ -1,5 +1,13 @@
 import React from "react";
-import { Route, Routes, useParams, useRoutes } from "react-router-dom";
+import {
+  matchPath,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+  useRoutes,
+} from "react-router-dom";
 import styled from "styled-components";
 import { PageLoader } from "../components";
 import { ProjectService } from "../services/ProjectService";
@@ -7,13 +15,17 @@ import { sizes } from "../styles/styles";
 import toast from "../utils/toast";
 import ProjectNavbarLeft from "./NavbarLeft";
 import ProjectSettings from "./ProjectSettings";
+import ProjectBoard from "./Board";
 import ProjectSidebar from "./Sidebar";
 
 export default function Project() {
   const param = useParams();
   const [isLoading, setIsLoading] = React.useState(true);
   const [project, setProject] = React.useState(null);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
+  console.log(location);
   //  is issue search modal open
   const [isIssueSearchModalOpen, setIsIssueSearchModalOpen] =
     React.useState(false);
@@ -32,6 +44,18 @@ export default function Project() {
       }
 
       setIsLoading(false);
+
+      const isRootPath = matchPath(
+        {
+          path: "/project/:id",
+          exact: true,
+        },
+        pathname
+      );
+      console.log(isRootPath);
+      if (isRootPath) {
+        navigate("/project/" + param.id + "/board");
+      }
     })();
   }, []);
 
@@ -53,6 +77,7 @@ export default function Project() {
       <ProjectSidebar project={project} />
 
       <Routes>
+        <Route path={`/board`} element={<ProjectBoard project={project} />} />
         <Route
           path={`/settings`}
           element={<ProjectSettings project={project} />}
