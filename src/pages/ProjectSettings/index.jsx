@@ -12,6 +12,7 @@ import { getAuth } from "firebase/auth";
 import { Avatar, Form, Icon, PageLoader } from "../../components";
 import { Actions, SelectItem, SelectItemLabel } from "../ProjectCreate/Styles";
 import { UserService } from "../../services/UserService";
+import DetailsLoader from "./Loader";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -39,7 +40,7 @@ const ProjectSettings = ({ project }) => {
   }, []);
 
   if (users.length === 0) {
-    return <PageLoader />;
+    return <DetailsLoader />;
   }
 
   return (
