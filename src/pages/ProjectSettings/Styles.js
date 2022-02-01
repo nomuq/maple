@@ -1,7 +1,6 @@
-import styled from 'styled-components';
-import { Button, Form } from '../../components';
-import { font } from '../../styles/styles';
-
+import styled from "styled-components";
+import { Button, Form } from "../../components";
+import { font } from "../../styles/styles";
 
 export const FormCont = styled.div`
   display: flex;

@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { color, font, mixin, sizes, zIndexValues } from '../../styles/styles';
-
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { color, font, mixin, sizes, zIndexValues } from "../../styles/styles";
 
 export const Sidebar = styled.div`
   position: fixed;
@@ -55,8 +54,10 @@ export const LinkItem = styled(Link)`
   padding: 8px 12px;
   border-radius: 3px;
   ${mixin.clickable}
-  ${props =>
-    !props.to ? `cursor: not-allowed;` : `&:hover { background: ${color.backgroundLight}; }`}
+  ${(props) =>
+    !props.to
+      ? `cursor: not-allowed;`
+      : `&:hover { background: ${color.backgroundLight}; }`}
   i {
     margin-right: 15px;
     font-size: 20px;

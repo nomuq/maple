@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 import { color, font, sizes } from "../../styles/styles";
 import { Button, Form, PageLoader } from "../../components";
@@ -16,7 +16,7 @@ export const SelectItem = styled.div`
   display: flex;
   align-items: center;
   margin-right: 15px;
-  ${props => props.withBottomMargin && `margin-bottom: 5px;`}
+  ${(props) => props.withBottomMargin && `margin-bottom: 5px;`}
 `;
 
 export const SelectItemLabel = styled.div`
