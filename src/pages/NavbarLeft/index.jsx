@@ -27,12 +27,6 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
       <ItemText>Search issues</ItemText>
     </Item>
 
-    {/* TODO: Move Create Issue to Boards Page */}
-    <Item onClick={issueCreateModalOpen}>
-      <Icon type="plus" size={27} />
-      <ItemText>Create Issue</ItemText>
-    </Item>
-
     {/* <Bottom>
       <AboutTooltip
         placement="right"

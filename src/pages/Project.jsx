@@ -22,17 +22,12 @@ export default function Project() {
   const param = useParams();
   const [isLoading, setIsLoading] = React.useState(true);
   const [project, setProject] = React.useState(null);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-
-  console.log(location);
-  //  is issue search modal open
   const [isIssueSearchModalOpen, setIsIssueSearchModalOpen] =
     React.useState(false);
-
-  // is issue create modal open
   const [isIssueCreateModalOpen, setIsIssueCreateModalOpen] =
     React.useState(false);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     (async () => {
