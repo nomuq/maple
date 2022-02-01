@@ -33,6 +33,44 @@ export enum ProjectType {
   OTHER = "Other",
 }
 
+export enum IssueType {
+  TASK = "task",
+  BUG = "bug",
+  STORY = "story",
+}
+
+export enum IssueStatus {
+  BACKLOG = "backlog",
+  SELECTED = "selected",
+  INPROGRESS = "inprogress",
+  DONE = "done",
+}
+
+export enum IssuePriority {
+  HIGHEST = "5",
+  HIGH = "4",
+  MEDIUM = "3",
+  LOW = "2",
+  LOWEST = "1",
+}
+
+export interface Issue {
+  id?: string;
+  title: string;
+  status: IssueStatus;
+  priority: IssuePriority;
+  listPosition: number;
+  description: string | null;
+  descriptionText: string | null;
+  estimate: number | null;
+  timeSpent: number | null;
+  timeRemaining: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+  reporterId: string;
+  projectId: string;
+}
+
 export interface Project {
   id?: string;
   name: string;
@@ -44,6 +82,7 @@ export interface Project {
   updatedAt: Date;
   createdBy: string;
   collaborators: string[];
+  issues: Issue[];
 }
 
 export class ProjectService {
