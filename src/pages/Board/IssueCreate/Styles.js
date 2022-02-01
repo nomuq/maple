@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { Button, Form } from '../../../components';
-import { color, font } from '../../../styles/styles';
+import styled from "styled-components";
+import { Button, Form } from "../../../components";
+import { color, font } from "../../../styles/styles";
 
 export const FormElement = styled(Form.Element)`
   padding: 25px 40px 35px;
@@ -15,7 +15,7 @@ export const SelectItem = styled.div`
   display: flex;
   align-items: center;
   margin-right: 15px;
-  ${props => props.withBottomMargin && `margin-bottom: 5px;`}
+  ${(props) => props.withBottomMargin && `margin-bottom: 5px;`}
 `;
 
 export const SelectItemLabel = styled.div`

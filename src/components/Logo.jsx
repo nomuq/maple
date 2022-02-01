@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import kanbanIcon from "../assets/logo.png";
 
 const propTypes = {
   className: PropTypes.string,
@@ -11,7 +12,15 @@ const defaultProps = {
   size: 28,
 };
 
-const Logo = ({ className, size }) => (
+const Logo = ({ className, size }) => {
+  return (
+    <div className={className}>
+      <img src={kanbanIcon} alt="logo" width={size} height={size} />
+    </div>
+  );
+};
+
+const Logo2 = ({ className, size }) => (
   <span className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"

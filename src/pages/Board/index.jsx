@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumbs, Modal } from "../../components";
+import ProjectBoardIssueDetails from "../IssueDetails";
 import ProjectBoardHeader from "./Header";
 import ProjectIssueCreate from "./IssueCreate";
 import ProjectBoardLists from "./Lists";
@@ -17,7 +18,9 @@ const ProjectBoard = ({ project }) => {
   const [showCreateIssueModal, setShowCreateIssueModal] = useState(false);
 
   const navigate = useNavigate();
+  const params = useParams();
 
+  console.log(params);
   if (!project.issues) {
     project.issues = [];
   }
@@ -64,14 +67,14 @@ const ProjectBoard = ({ project }) => {
                 navigate("/project/" + project.id + "/board");
               }}
               renderContent={(modal) => (
-                <div>Fuck This</div>
-                // <IssueDetails
-                //   issueId={routeProps.match.params.issueId}
-                //   projectUsers={project.users}
-                //   fetchProject={fetchProject}
-                //   updateLocalProjectIssues={updateLocalProjectIssues}
-                //   modalClose={modal.close}
-                // />
+                <ProjectBoardIssueDetails
+                  project={project}
+                  issueId={params["*"]}
+                  projectUsers={project.users}
+                  fetchProject={() => {}}
+                  updateLocalProjectIssues={() => {}}
+                  modalClose={modal.close}
+                />
               )}
             />
           }

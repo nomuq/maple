@@ -1,8 +1,7 @@
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
-import { color, font, mixin } from '../../../../../styles/styles';
-import { Avatar } from '../../../../../components';
-
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import { color, font, mixin } from "../../../../../styles/styles";
+import { Avatar } from "../../../../../components";
 
 export const IssueLink = styled(Link)`
   display: block;
@@ -22,7 +21,7 @@ export const Issue = styled.div`
   &:hover {
     background: ${color.backgroundLight};
   }
-  ${props =>
+  ${(props) =>
     props.isBeingDragged &&
     css`
       transform: rotate(3deg);

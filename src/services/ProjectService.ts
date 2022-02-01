@@ -52,6 +52,15 @@ export enum IssuePriority {
   LOW = "2",
   LOWEST = "1",
 }
+export interface IssueComment {
+  id?: string;
+  body: string;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;
+  updatedBy: string;
+  issueId: string;
+}
 
 export interface Issue {
   id?: string;
@@ -69,6 +78,7 @@ export interface Issue {
   reporterId: string;
   projectId: string;
   assignees: string[];
+  comments: IssueComment[];
 }
 
 export interface Project {
@@ -126,8 +136,8 @@ export class ProjectService {
       description: project.description,
       category: project.category,
       type: project.type,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
+      createdAt: new Date().toUTCString(),
+      updatedAt: new Date().toUTCString(),
       createdBy: project.createdBy,
       collaborators: project.collaborators,
     });
@@ -143,8 +153,8 @@ export class ProjectService {
         description: project.description,
         category: project.category,
         type: project.type,
-        createdAt: project.createdAt ?? Timestamp.now(),
-        updatedAt: Timestamp.now(),
+        createdAt: project.createdAt ?? new Date().toUTCString(),
+        updatedAt: new Date().toUTCString(),
         createdBy: project.createdBy,
         collaborators: project.collaborators,
       },
@@ -166,6 +176,18 @@ export class ProjectService {
     });
   }
 
+  public async getIssue(project: Project, issueId: string): Promise<Issue> {
+    const docRef = doc(
+      this.database,
+      `projects/${project.id}/issues/${issueId}`
+    );
+    const issue = await getDoc(docRef);
+    const data = issue.data() as Issue;
+    data.id = issue.id;
+    data.comments = [];
+    return data;
+  }
+
   public async createIssue(
     project: Project,
     issue: Issue
@@ -174,8 +196,8 @@ export class ProjectService {
       collection(this.database, `projects/${project.id}/issues`),
       {
         ...issue,
-        createdAt: Timestamp.now(),
-        updatedAt: Timestamp.now(),
+        createdAt: new Date().toUTCString(),
+        updatedAt: new Date().toUTCString(),
         status: IssueStatus.TODO,
         projectId: project.id,
       }

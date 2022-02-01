@@ -1,6 +1,5 @@
-import styled from 'styled-components';
-import { color, font, mixin } from '../../../../styles/styles';
-
+import styled from "styled-components";
+import { color, font, mixin } from "../../../../styles/styles";
 
 export const List = styled.div`
   display: flex;
