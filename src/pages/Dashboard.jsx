@@ -14,6 +14,7 @@ import ProjectCreate from "./ProjectCreate";
 import { UserService } from "../services/UserService";
 import { Link } from "react-router-dom";
 import DynamicTable from "@atlaskit/dynamic-table";
+import toast from "../utils/toast";
 
 export default function Dashboard() {
   const auth = getAuth();
@@ -77,14 +78,30 @@ export default function Dashboard() {
       <Projects>
         <Header>
           <Title>Projects</Title>
-          <Button
-            variant="primary"
-            onClick={() => {
-              setIsCreateProjectModelOpen(true);
-            }}
-          >
-            Create Project
-          </Button>
+          <ButtonGroup>
+            <Button
+              variant="primary"
+              onClick={() => {
+                setIsCreateProjectModelOpen(true);
+              }}
+            >
+              Create Project
+            </Button>
+            <LogoutButton>
+              <Button
+                // variant="primary"
+                onClick={async () => {
+                  try {
+                    await auth.signOut();
+                  } catch (error) {
+                    toast.show(error.message);
+                  }
+                }}
+              >
+                Logout
+              </Button>
+            </LogoutButton>
+          </ButtonGroup>
         </Header>
 
         <Project>
@@ -187,6 +204,15 @@ export default function Dashboard() {
     </>
   );
 }
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const LogoutButton = styled.div`
+  padding-left: 10px;
+`;
 
 const Projects = styled.div`
   padding: 25px;
