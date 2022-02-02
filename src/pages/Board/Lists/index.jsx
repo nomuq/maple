@@ -6,6 +6,12 @@ import List from "./List";
 import { Lists } from "./Styles";
 import { getAuth } from "firebase/auth";
 import { IssueStatus } from "../../../constants/issues";
+import {
+  insertItemIntoArray,
+  moveItemWithinArray,
+} from "../../../utils/javascript";
+import { ProjectService } from "../../../services/ProjectService";
+import toast from "../../../utils/toast";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -16,10 +22,46 @@ const propTypes = {
 const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
   const auth = getAuth();
 
-  const handleIssueDrop = ({ draggableId, destination, source }) => {
-    if (!isPositionChanged(source, destination)) return;
+  console.log("ProjectBoardLists", project, filters);
 
-    const issueId = Number(draggableId);
+  const [allIssues, setAllIssues] = React.useState(project.issues);
+
+  const handleIssueDrop = async ({ draggableId, destination, source }) => {
+    if (!isPositionChanged(source, destination)) return;
+    const position = calculateIssueListPosition(
+      project.issues,
+      destination,
+      source,
+      draggableId
+    );
+
+    console.log("handleIssueDrop", draggableId, destination, source, position);
+    try {
+      const updatedIssues = project.issues.map((issue) => {
+        if (issue.id === draggableId) {
+          return {
+            ...issue,
+            status: destination.droppableId,
+            listPosition: position,
+          };
+        }
+        return issue;
+      });
+
+      project.issues = updatedIssues;
+
+      setAllIssues(updatedIssues);
+
+      updateLocalProjectIssues(updatedIssues);
+
+      await ProjectService.getInstance().updateIssue(project, {
+        id: draggableId,
+        status: destination.droppableId,
+        listPosition: position,
+      });
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -61,6 +103,7 @@ const calculateIssueListPosition = (...args) => {
       prevIssue.listPosition +
       (nextIssue.listPosition - prevIssue.listPosition) / 2;
   }
+
   return position;
 };
 
@@ -76,7 +119,6 @@ const getAfterDropPrevNextIssue = (
   );
   const droppedIssue = allIssues.find((issue) => issue.id === droppedIssueId);
   const isSameList = destination.droppableId === source.droppableId;
-
   const afterDropDestinationIssues = isSameList
     ? moveItemWithinArray(
         beforeDropDestinationIssues,

@@ -30,6 +30,8 @@ export default function Project() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  const [reload, setReload] = React.useState(0);
+
   React.useEffect(() => {
     (async () => {
       try {
@@ -62,6 +64,22 @@ export default function Project() {
         navigate("/project/" + param.id + "/board");
       }
     })();
+  }, [reload]);
+
+  // // add observer to detect changes in the project
+  React.useEffect(() => {
+    if (param.id) {
+      const unsubscribe = ProjectService.getInstance().observeProject(
+        param.id,
+        (project) => {
+          setReload(reload + 1);
+        }
+      );
+
+      return () => {
+        unsubscribe();
+      };
+    }
   }, []);
 
   if (isLoading) {

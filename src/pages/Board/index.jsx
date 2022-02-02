@@ -1,6 +1,7 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumbs, Modal } from "../../components";
+import { ProjectService } from "../../services/ProjectService";
 import ProjectBoardIssueDetails from "../IssueDetails";
 import ProjectBoardHeader from "./Header";
 import ProjectIssueCreate from "./IssueCreate";
@@ -20,10 +21,28 @@ const ProjectBoard = ({ project }) => {
   const navigate = useNavigate();
   const params = useParams();
 
-  console.log(params);
   if (!project.issues) {
     project.issues = [];
   }
+
+  // const [issues, setIssues] = useState(project.issues);
+
+  // observe the project issues and reload it if it changes
+  // React.useEffect(() => {
+  //   const unsubscribe = ProjectService.getInstance().observeIssues(
+  //     project,
+  //     (issues) => {
+  //       project.issues = issues;
+  //       // setIssues(issues);
+
+  //       console.log("observeIssues", issues);
+  //     }
+  //   );
+
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
 
   return (
     <Fragment>
@@ -50,8 +69,13 @@ const ProjectBoard = ({ project }) => {
       />
       <ProjectBoardLists
         project={project}
+        // issues={issues}
         filters={filters}
-        updateLocalProjectIssues={() => {}}
+        updateLocalProjectIssues={(issues) => {
+          // project.issues = issues;
+          // debugger;
+          // setIssues(issues);
+        }}
       />
 
       <Routes>
@@ -71,8 +95,12 @@ const ProjectBoard = ({ project }) => {
                   project={project}
                   issueId={params["*"]}
                   projectUsers={project.users}
-                  fetchProject={() => {}}
-                  updateLocalProjectIssues={() => {}}
+                  fetchProject={() => {
+                    console.log("fetch project");
+                  }}
+                  updateLocalProjectIssues={() => {
+                    console.log("update local project issues");
+                  }}
                   modalClose={modal.close}
                 />
               )}

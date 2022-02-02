@@ -9,9 +9,11 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  onSnapshot,
   query,
   setDoc,
   Timestamp,
+  Unsubscribe,
   where,
 } from "firebase/firestore";
 
@@ -212,6 +214,13 @@ export class ProjectService {
     project: Project,
     issue: Issue
   ): Promise<DocumentReference> {
+    const issues = await getDocs(
+      query(
+        collection(this.database, `projects/${project.id}/issues`),
+        where("status", "==", IssueStatus.TODO)
+      )
+    );
+
     const docRef = await addDoc(
       collection(this.database, `projects/${project.id}/issues`),
       {
@@ -220,8 +229,55 @@ export class ProjectService {
         updatedAt: new Date().toUTCString(),
         status: IssueStatus.TODO,
         projectId: project.id,
+        listPosition: issues.docs.length,
       }
     );
     return docRef;
+  }
+
+  public async updateIssue(project: Project, issue: Issue): Promise<void> {
+    const docRef = doc(
+      this.database,
+      `projects/${project.id}/issues/${issue.id}`
+    );
+    await setDoc(
+      docRef,
+      {
+        ...issue,
+        updatedAt: new Date().toUTCString(),
+      },
+      {
+        merge: true,
+      }
+    );
+  }
+
+  public observeProject(
+    id: string,
+    callback: (project: Project) => void
+  ): Unsubscribe {
+    return onSnapshot(doc(this.database, `projects/${id}`), (doc) => {
+      const data = doc.data() as Project;
+      data.id = doc.id;
+      callback(data);
+    });
+  }
+
+  public observeIssues(
+    project: Project,
+    callback: (issues: Issue[]) => void
+  ): Unsubscribe {
+    return onSnapshot(
+      collection(this.database, `projects/${project.id}/issues`),
+      (snapshot) => {
+        callback(
+          snapshot.docs.map((doc) => {
+            const data = doc.data() as Issue;
+            data.id = doc.id;
+            return data;
+          })
+        );
+      }
+    );
   }
 }
