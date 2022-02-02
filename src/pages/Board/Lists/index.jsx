@@ -26,6 +26,23 @@ const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
 
   const [allIssues, setAllIssues] = React.useState(project.issues);
 
+  // observe the project issues and reload it if it changes
+  React.useEffect(() => {
+    const unsubscribe = ProjectService.getInstance().observeIssues(
+      project,
+      (issues) => {
+        project.issues = issues;
+        setAllIssues(issues);
+
+        console.log("observeIssues", issues);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const handleIssueDrop = async ({ draggableId, destination, source }) => {
     if (!isPositionChanged(source, destination)) return;
     const position = calculateIssueListPosition(
@@ -70,6 +87,7 @@ const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
         {Object.values(IssueStatus).map((status) => (
           <List
             key={status}
+            issues={getSortedListIssues(allIssues, status)}
             status={status}
             project={project}
             filters={filters}

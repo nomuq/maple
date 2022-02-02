@@ -270,13 +270,18 @@ export class ProjectService {
     return onSnapshot(
       collection(this.database, `projects/${project.id}/issues`),
       (snapshot) => {
-        callback(
-          snapshot.docs.map((doc) => {
-            const data = doc.data() as Issue;
-            data.id = doc.id;
-            return data;
-          })
-        );
+        if (
+          snapshot.docChanges().filter((change) => change.type === "added")
+            .length > 0
+        ) {
+          callback(
+            snapshot.docs.map((doc) => {
+              const data = doc.data() as Issue;
+              data.id = doc.id;
+              return data;
+            })
+          );
+        }
       }
     );
   }
