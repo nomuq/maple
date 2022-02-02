@@ -117,17 +117,37 @@ export class ProjectService {
   }
 
   public async getProjects(): Promise<Project[]> {
-    const q = query(
-      collection(this.database, "projects"),
-      where("collaborators", "array-contains", this.auth.currentUser.uid),
-      where("createdBy", "==", this.auth.currentUser.uid)
-    );
-    const snapshot = await getDocs(collection(this.database, `projects`));
-    return snapshot.docs.map((doc) => {
+    const collobratedProjects = (
+      await getDocs(
+        query(
+          collection(this.database, "projects"),
+          where("collaborators", "array-contains", this.auth.currentUser.uid)
+        )
+      )
+    ).docs.map((doc) => {
       const data = doc.data() as Project;
       data.id = doc.id;
       return data;
     });
+    const myProjects = (
+      await getDocs(
+        query(
+          collection(this.database, "projects"),
+          where("createdBy", "==", this.auth.currentUser.uid)
+        )
+      )
+    ).docs.map((doc) => {
+      const data = doc.data() as Project;
+      data.id = doc.id;
+      return data;
+    });
+
+    return [...collobratedProjects, ...myProjects];
+    // return snapshot.docs.map((doc) => {
+    //   const data = doc.data() as Project;
+    //   data.id = doc.id;
+    //   return data;
+    // });
   }
 
   public async createProject(project: Project): Promise<DocumentReference> {
