@@ -22,8 +22,6 @@ const propTypes = {
 const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
   const auth = getAuth();
 
-  console.log("ProjectBoardLists", project, filters);
-
   const [allIssues, setAllIssues] = React.useState(project.issues);
 
   // observe the project issues and reload it if it changes
@@ -33,8 +31,7 @@ const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
       (issues) => {
         project.issues = issues;
         setAllIssues(issues);
-
-        console.log("observeIssues", issues);
+        updateLocalProjectIssues(issues);
       }
     );
 

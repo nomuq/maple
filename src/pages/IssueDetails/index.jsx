@@ -69,6 +69,7 @@ const ProjectBoardIssueDetails = ({
 
   const updateIssue = (updatedFields) => {
     console.log("updateIssue", updatedFields);
+
     // api.optimisticUpdate(`/issues/${issueId}`, {
     //   updatedFields,
     //   currentFields: issue,
